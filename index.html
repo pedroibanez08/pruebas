@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JSON</title>
+</head>
+<body>
+<ul id="lugar"></ul>
+<div id="lugar2"></div>
+	<script>
+// 		var persona=[
+// {"nombre":"Pedro",
+// "edad":50,
+// "hijos":["Adria","Marta"]
+// 		},{"nombre":"Margarita",
+// "edad":42,
+// "hijos":["Amara","Enola"]
+// 		}];
+// 		var salida="";
+// 		for(var i=0;i<persona.length;++i){
+// 			for(var j=0;j<2;++j){
+// 			salida+="<li>"+persona[i].hijos[j]+" es hijo/a de "+persona[i].nombre+"</li>";
+// 		}
+// 		}
+// 		document.getElementById("lugar").innerHTML=salida;
+// 		//console.log(persona[1].hijos[1]);
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var respuesta=JSON.parse(xhttp.responseText);
+    	var persona=respuesta.personas;
+    	console.log(persona.length);
+    	var salida="";
+		for(var i=0;i<persona.length;++i){
+			for(var j=0;j<2;++j){
+			salida+="<li>"+persona[i].hijos[j]+" es hijo/a de "+persona[i].nombre+"</li>";
+		}
+		}
+		document.getElementById("lugar").innerHTML=salida;
+		document.getElementById("lugar2").innerHTML=`Hola ${2+2}
+		<p>Hola</p>
+		<p>Hola otra vez</p>
+		${persona}<br>
+		${persona.join(" pizza ")}<br>
+		${persona.map(function(){
+			return "hello";
+		}).join(" pizza ")}<br>
+		${persona.map(function(pariente){
+			return pariente.nombre;
+		}).join(" pizza ")}<br>
+		${persona.map(function(pariente){
+			return `<img src=${pariente.mascota}><br>`;
+		}).join("")}<br>
+		`;
+
+    	//console.log(respuesta);
+       // Typical action to be performed when the document is ready:
+       //document.getElementById("demo").innerHTML = xhttp.responseText;
+    }
+};
+xhttp.open("GET", "personas.json", true);
+xhttp.send();
+
+	</script>
+	
+</body>
+</html>
